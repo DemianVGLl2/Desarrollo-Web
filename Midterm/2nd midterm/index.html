@@ -8,36 +8,38 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bai+Jamjuree&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
 </head>
 <body>
     <div class="card-group">
         <div class="card">
-          <img src="<%= image%>" class="card-img-top" alt="character_mug">
+          <img src="https://thronesapi.com/assets/images/daenerys.jpg
+          " class="card-img-top" alt="character_mug">
           <div class="card-body">
-            <h5 class="card-title txt">Character ID: <%= id%> </h5>
-            <h4><p class="card-text txt"><small class="text-body-secondary"><%= first_name%> <%= last_name%></small></p></h4>
+            <h5 class="card-title txt">Character #id</h5>
+            <p class="card-text txt">This is character</p>
+            <p class="card-text txt"><small class="text-body-secondary">First name and last name here</small></p>
           </div>
         </div>
         <div class="card" style="width: 18rem;">
               <h5 class="card-title txt">General info</h5>
-              <ul class="list-group list-group-flush">
-              <li class="list-group-item txt">Born <%= born_date%></li>
-              <% if (dead_date != "") { %>
-              <li class="list-group-item txt">Died <%= dead_date%></li>
-              <% } %>
-              <li class="list-group-item txt">Titles: <% var cont=0; titles.forEach((title, index) => { %>
-                <%= title %><% if (index < titles.length - 1) { %>, <% } %>
-              <% }) %></li>
-              <li class="list-group-item txt">Allegiances: <% var cont=0; alliances.forEach((alliance, index) => { %>
-                <%= alliance %><% if (index < alliances.length - 1) { %>, <% } %>
-              <% }) %></li>
-              <h5 class="card-title txt"><%= family%></h5>
-              <!---<li class="list-group-item txt">Books where they appear</li>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item txt">Date of birth: dd/mm/YY</li>
+              <li class="list-group-item txt">Date of death: dd/mm/YY</li>
+              <li class="list-group-item txt">Titles: Title list</li>
+              <li class="list-group-item txt">Allegiances: Allegiance list</li>
+              <li class="list-group-item txt">Books where they appear</li>
               <li class="list-group-item txt">PoVBooks where they appear</li>
               <li class="list-group-item txt">Season appearences</li>
-              <li class="list-group-item txt">Actor that played them</li>--->
+              <li class="list-group-item txt">Actor that played them</li>
             </ul>
+          </div>
+        <div class="card">
+            <img src="../2nd midterm/public/images/stark_crest.jpg" class="card-img-top" alt="family">
+            <div class="card-body">
+              <h5 class="card-title txt">Family name</h5>
+              <p class="card-text txt">Maybe family history here or smth</p>
+            </div>
           </div>
       </div>
       <div>

@@ -11,45 +11,59 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-const url1 = "https://anapioficeandfire.com/api/characters";
-const url2 = "https://thronesapi.com/api/v2/Characters";
+const url1 = "https://thronesapi.com/api/v2/Characters";
 
-let id = "";
+let id = 0;
 let image = "";
 let first_name = "";
 let last_name = "";
 let born_date = "";
 let dead_date = "";
 let titles = [];
-let aliances = "";
-let family = [];
-
-app.get('/', (req, res) => {
-    res.render("index", { id: id });
-});
+let alliances = "";
+let family = "";
 
 app.get('/', (req, res) => {
     https.get(url1, (response) => {
-        console.log(response);
         let tempRes="";
 
         response.on('data', (data) => {
-            console.log(data);
             tempRes+=data;
         }).on('end', (data) => {
-            var json = JSON.parse(tempRes);
-        });
-    });
+            var api1 = JSON.parse(tempRes);
+            
+            api1.forEach(element => {
+                if (element.id == id) {
+                    image = element.imageUrl;
+                    first_name = element.firstName;
+                    last_name = element.lastName;
+                    family = element.family;
+                }
+            });
 
-    https.get(url2, (response) => {
-        console.log(response);
-        let tempRes="";
-        
-        response.on('data', (data) => {
-            console.log(data);
-            tempRes+=data;
-        }).on('end', (data) => {
-            var json = JSON.parse(tempRes);
+            var url2 = "https://www.anapioficeandfire.com/api/characters?name="+first_name+" "+last_name;
+
+            https.get(url2, (response) => {
+                let tempRes2="";
+                
+                response.on('data', (data) => {
+                    tempRes2+=data;
+                }).on('end', (data) => {
+                    var api2 = JSON.parse(tempRes2);
+                    api2.forEach(element => {
+                        if (element.name == first_name+" "+last_name) {
+                            born_date = element.born;
+                            dead_date = element.died;
+                            titles = element.titles;
+                            alliances = element.aliases;
+                        }
+                    });
+                });
+            });
+
+            res.render("index", { id: id, image: image, first_name: first_name, last_name: last_name, family: family, 
+                born_date: born_date, dead_date: dead_date, titles: titles, alliances: alliances });
+
         });
     });
 });
