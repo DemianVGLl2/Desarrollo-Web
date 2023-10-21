@@ -9,6 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bai+Jamjuree&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
+    <script type="text/javascript" src="../server.js"></script>
+    <script type="text/javascript">
+      function nextCharacter() {
+        window.location.href = '/nextCharacter';
+      }
+      function previousCharacter() {
+        window.location.href = '/previousCharacter';
+      }
+    </script>
 </head>
 <body>
     <div class="card-group">
@@ -33,19 +42,17 @@
                 <%= alliance %><% if (index < alliances.length - 1) { %>, <% } %>
               <% }) %></li>
               <h5 class="card-title txt"><%= family%></h5>
-              <!---<li class="list-group-item txt">Books where they appear</li>
-              <li class="list-group-item txt">PoVBooks where they appear</li>
-              <li class="list-group-item txt">Season appearences</li>
-              <li class="list-group-item txt">Actor that played them</li>--->
             </ul>
           </div>
       </div>
       <div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev"
+        onclick="previousCharacter()">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next"
+        onclick="nextCharacter()">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>      
