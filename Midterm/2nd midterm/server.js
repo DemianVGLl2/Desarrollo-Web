@@ -23,9 +23,10 @@ let dead_date = "";
 let titles = [];
 let alliances = "";
 let family = "";
+let searchName = "";
 
 app.get('/', (req, res) => {
-    fetchDataAndRender(res);
+    loadMain(res);
 });
 
 // Ruta para cargar el personaje siguiente
@@ -35,7 +36,7 @@ app.get('/nextCharacter', (req, res) => {
     } else {
         id = 0; // Si ya estamos en el último personaje, volvemos al primero.
     }
-    fetchDataAndRender(res);
+    loadMain(res);
 });
 
 // Ruta para cargar el personaje anterior
@@ -45,108 +46,105 @@ app.get('/previousCharacter', (req, res) => {
     } else {
         id = 52; // Si estamos en el primer personaje, vamos al último.
     }
-    fetchDataAndRender(res);
+    loadMain(res);
 });
 
-function fetchDataAndRender(res) {
+app.get('/searchCharacter', (req, res) => {
+    searchName = req.query.name;
+    loadMain(res);
+});
+
+function loadMain(res) {
     https.get(url1, (response) => {
         let tempRes = "";
 
-        response.on('data', (data) => {
-            tempRes += data;
-        }).on('end', (data) => {
-            var api1 = JSON.parse(tempRes);
+        if (searchName) {
+            response.on('data', (data) => {
+                tempRes += data;
+            }).on('end', (data) => {
+                var api1 = JSON.parse(tempRes);
 
-            api1.forEach(element => {
-                if (element.id == id) {
-                    image = element.imageUrl;
-                    first_name = element.firstName;
-                    last_name = element.lastName;
-                    family = element.family;
-                }
-            });
+                var searchFirstName = searchName.split(" ")[0];
 
-            var url2 = "https://www.anapioficeandfire.com/api/characters?name=" + first_name + " " + last_name;
+                api1.forEach(element => {
+                    if (element.firstName == searchFirstName) {
+                        id = element.id;
+                        image = element.imageUrl;
+                        first_name = element.firstName;
+                        last_name = element.lastName;
+                        family = element.family;
+                    }
+                });
 
-            https.get(url2, (response) => {
-                let tempRes2 = "";
+                var url2 = "https://www.anapioficeandfire.com/api/characters?name=" + first_name + " " + last_name;
 
-                response.on('data', (data) => {
-                    tempRes2 += data;
-                }).on('end', (data) => {
-                    var api2 = JSON.parse(tempRes2);
-                    api2.forEach(element => {
-                        if (element.name == first_name + " " + last_name) {
-                            born_date = element.born;
-                            dead_date = element.died;
-                            titles = element.titles;
-                            alliances = element.aliases;
-                        }
-                    });
+                https.get(url2, (response) => {
+                    let tempRes2 = "";
 
-                    // Después de obtener los datos, renderiza la página.
-                    res.render("index", {
-                        id: id,
-                        image: image,
-                        first_name: first_name,
-                        last_name: last_name,
-                        family: family,
-                        born_date: born_date,
-                        dead_date: dead_date,
-                        titles: titles,
-                        alliances: alliances
+                    response.on('data', (data) => {
+                        tempRes2 += data;
+                    }).on('end', (data) => {
+                        var api2 = JSON.parse(tempRes2);
+                        api2.forEach(element => {
+                            if (element.name == first_name + " " + last_name) {
+                                born_date = element.born;
+                                dead_date = element.died;
+                                titles = element.titles;
+                                alliances = element.aliases;
+                            }
+                        });
+
+                        searchFirstName="";
+
+                        res.render("index", { id: id, image: image, first_name: first_name, last_name: last_name, family: family, 
+                            born_date: born_date, dead_date: dead_date, titles: titles, alliances: alliances, searchName: searchName
+                        });
                     });
                 });
             });
-        });
+        }
+        else {
+            response.on('data', (data) => {
+                tempRes += data;
+            }).on('end', (data) => {
+                var api1 = JSON.parse(tempRes);
+
+                api1.forEach(element => {
+                    if (element.id == id) {
+                        image = element.imageUrl;
+                        first_name = element.firstName;
+                        last_name = element.lastName;
+                        family = element.family;
+                    }
+                });
+
+                var url2 = "https://www.anapioficeandfire.com/api/characters?name=" + first_name + " " + last_name;
+
+                https.get(url2, (response) => {
+                    let tempRes2 = "";
+
+                    response.on('data', (data) => {
+                        tempRes2 += data;
+                    }).on('end', (data) => {
+                        var api2 = JSON.parse(tempRes2);
+                        api2.forEach(element => {
+                            if (element.name == first_name + " " + last_name) {
+                                born_date = element.born;
+                                dead_date = element.died;
+                                titles = element.titles;
+                                alliances = element.aliases;
+                            }
+                        });
+
+                        res.render("index", { id: id, image: image, first_name: first_name, last_name: last_name, family: family, 
+                            born_date: born_date, dead_date: dead_date, titles: titles, alliances: alliances, searchName: searchName
+                        });
+                    });
+                });
+            });
+        }
     });
 }
-
-/*
-app.get('/', (req, res) => {
-    https.get(url1, (response) => {
-        let tempRes="";
-
-        response.on('data', (data) => {
-            tempRes+=data;
-        }).on('end', (data) => {
-            var api1 = JSON.parse(tempRes);
-            
-            api1.forEach(element => {
-                if (element.id == id) {
-                    image = element.imageUrl;
-                    first_name = element.firstName;
-                    last_name = element.lastName;
-                    family = element.family;
-                }
-            });
-
-            var url2 = "https://www.anapioficeandfire.com/api/characters?name="+first_name+" "+last_name;
-
-            https.get(url2, (response) => {
-                let tempRes2="";
-                
-                response.on('data', (data) => {
-                    tempRes2+=data;
-                }).on('end', (data) => {
-                    var api2 = JSON.parse(tempRes2);
-                    api2.forEach(element => {
-                        if (element.name == first_name+" "+last_name) {
-                            born_date = element.born;
-                            dead_date = element.died;
-                            titles = element.titles;
-                            alliances = element.aliases;
-                        }
-                    });
-                });
-            });
-
-            res.render("index", { id: id, image: image, first_name: first_name, last_name: last_name, family: family, 
-                born_date: born_date, dead_date: dead_date, titles: titles, alliances: alliances });
-
-        });
-    });
-});*/
 
 app.listen(1000, () => {
     console.log("Listening to port 1000");
