@@ -52,7 +52,8 @@ app.get('/previousCharacter', (req, res) => {
 app.get('/searchCharacter', (req, res) => {
     searchName = req.query.name;
     loadMain(res);
-});
+}); //funcion igual a como estaba
+
 
 function loadMain(res) {
     https.get(url1, (response) => {
@@ -75,6 +76,8 @@ function loadMain(res) {
                         family = element.family;
                     }
                 });
+
+                searchName = "";
 
                 var url2 = "https://www.anapioficeandfire.com/api/characters?name=" + first_name + " " + last_name;
 
@@ -106,6 +109,7 @@ function loadMain(res) {
         else {
             response.on('data', (data) => {
                 tempRes += data;
+                tempRes.searchName = ""; //borrar searchName
             }).on('end', (data) => {
                 var api1 = JSON.parse(tempRes);
 
