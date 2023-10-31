@@ -1,5 +1,5 @@
 <%- include("partials/header"); -%>
-    <form action="/driver" method="get">
+    <form action="/driver" method="post">
         <h2>Driver information</h2>
         <input type="text" name="num" id="num" placeholder="Number" />
         <input type="text" name="code" id="code" placeholder="Code" />
@@ -26,4 +26,10 @@
         <p> <input type="submit" /> </p>
 
     </form>
+
+    <ul>
+        <% drivers.forEach((driver) => { %>
+            <li><%= driver.forename %> <%= driver.surname %></li>
+        <% }); %>
+    </ul>
 <%- include("partials/footer"); -%>
