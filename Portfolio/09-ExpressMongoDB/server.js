@@ -65,6 +65,13 @@ let teamsRaw = [
     { code: "mercedes", name: "Mercedes", country: "GER"},
     { code: "aston_martin", name: "Aston Martin", country: "ENG"},
     { code: "alpine", name: "Alpine", country: "FRA"},
+    { code: "haas", name: "Haas", country: "GER"},
+    { code: "red_bull", name: "Red Bull", country: "MEX"},
+    { code: "alpha_tauri", name: "Alpha Tauri", country: "AUS"},
+    { code: "alpha_romeo", name: "Alpha_Romeo", country: "FIN"},
+    { code: "ferrari", name: "Ferrari", country: "ITA"},
+    { code: "mclaren", name: "McLaren", country: "ENG"},
+    { code: "williams", name: "Williams", country: "THA"},
 ];
 
 let teams = [];
@@ -107,44 +114,54 @@ app.get("/", (req, res) => {
 });
 
 app.post("/driver", async(req, res, next) => {
-  var team = await Team.findOne({code: {$eq: req.body.team}}).exec();
-  //Method 1: Using direct mode
-  /*var driver = {
-    num: req.body.name,
-    code: req.body.code,
-    forename: req.body.forename,
-    surname: req.body.surname,
-    dob: req.body.dob,
-    url: req.body.url,
-    nationality: req.body.nation,
-    team: team,
-  };
+  var match = await Driver.findOne({num: {$eq: req.body.num}}).exec();
 
-  await Driver.insertOne(driver).then(() => {
-    console.log("Driver recorded");
-  })
-  .catch((err) => {
-    console.error(err);
-  })*/
+  if (match && drivers.includes(match)) {
+    
+    res.redirect("/");
+  }
+  else if (match && !drivers.includes(match)) {
+    drivers.push(match);
+    res.redirect('/');
+  }
+  else {
+    var team = await Team.findOne({code: {$eq: req.body.team}}).exec();
+    //Method 1: Using direct mode
+    /*var driver = {
+      num: req.body.name,
+      code: req.body.code,
+      forename: req.body.forename,
+      surname: req.body.surname,
+      dob: req.body.dob,
+      url: req.body.url,
+      nationality: req.body.nation,
+      team: team,
+    };
 
-  //Method 2
-  var driver = new Driver({
-    num: req.body.num,
-    code: req.body.code,
-    forename: req.body.name,
-    surname: req.body.lname,
-    dob: req.body.dob,
-    nationality: req.body.nation,
-    url: req.body.url,
-    team: team,
-  });
+    await Driver.insertOne(driver).then(() => {
+      console.log("Driver recorded");
+    })
+    .catch((err) => {
+      console.error(err);
+    })*/
+
+    //Method 2
+    var driver = new Driver({
+        num: req.body.num,
+        code: req.body.code,
+        forename: req.body.name,
+        surname: req.body.lname,
+        dob: req.body.dob,
+        nationality: req.body.nation,
+        url: req.body.url,
+        team: team,
+    });
+    driver.save();
+    drivers.push(driver);
+    res.redirect('/');
+  }
   
-  driver.save();
-  drivers.push(driver);
-  res.redirect('/');
 });
-
-
 
 app.listen(3000, (err) => {
   console.log("Listening on port 3000");
