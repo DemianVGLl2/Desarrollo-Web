@@ -1,0 +1,18 @@
+.circle-img {
+    border-radius: 50%;
+    border: 7px solid white;
+    width: 120px;
+    height: 120px;
+}
+
+.card {
+    border-radius: 25px;
+    position: relative;
+    padding: 45px 35px;
+    background-color: #81ecec;
+    margin: 50px 0;
+    width: 300px;
+    height: 200px;
+    box-shadow: 0 2px 5px #cccc;
+    text-align: center;
+}
