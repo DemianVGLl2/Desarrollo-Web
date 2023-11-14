@@ -5,9 +5,13 @@ import Avatar from "./Avatar";
 function Card(props) {
     return (
         <div className="card">
-            <Avatar src={props.img}></Avatar>
-            <h2>{props.name}</h2>
-            <p>{props.phone}</p>
+            <div className="top">
+                <h2 className="name">{props.name}</h2>
+                <Avatar src={props.img}></Avatar>
+            </div>
+            <div className="bottom">
+                <p className="info">{props.phone}</p>
+            </div>
         </div>
     );
 }
