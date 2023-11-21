@@ -1,3 +1,5 @@
+import React from "react";
+
 function Picture() {
     var num = Math.floor(Math.random() * 100);
     var image = "https://picsum.photos/400";

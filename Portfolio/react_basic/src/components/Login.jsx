@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function Login(props) {
 
@@ -38,7 +39,27 @@ function Login(props) {
     }
 
     function submitForm(event) {
-        if (userProfile.user === "Demián" && userProfile.password === "1234") {
+        axios
+            .post("/login", {
+                user: userProfile.user,
+                password: userProfile.password,
+            })
+            .then((res) => {
+                console.log("Response from server");
+                if (res.data.authorization === 1) {
+                    console.log("Logged in");
+                    setMessage("");
+                    props.listener();
+                } else {
+                    console.log("Wrong data");
+                    setMessage("Wrong data");
+                }
+            })
+            .catch((err) => {
+                console.error(err.error);
+            });
+
+        /*if (userProfile.user === "Demián" && userProfile.password === "1234") {
             console.log("Logged in");
             //setMessage("");
             props.listener();
@@ -47,7 +68,7 @@ function Login(props) {
             console.log("Wrong data");
             setMessage("Wrong data");
         }
-        console.log("Message: "+message);
+        console.log("Message: "+message);*/
         event.preventDefault();
     }
 
