@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 import React, { useState } from 'react'; //Change state for reactive components
-import { Routes, Route } from "react-router-dom"; //Navigation
+import { Routes, Route, Navigate } from "react-router-dom"; //Navigation
 import './App.css';
 import Header from "./components/Header";
 import Login from "./components/Login";
@@ -18,16 +18,19 @@ function App() {
     setIsLoggedIn(!isLoggedIn);
   }
 
+  function CheckLogStatus(props) {
+    return isLoggedIn ? <props.component status={isLoggedIn} listener={changeLoggedState}/> : <Navigate to="/"/>;
+  }
+
   return (
-    <div className="App">
-      <Header />
+    <div className="App container">
+      <CheckLogStatus component={Header}/>
       <Routes>
-        <Route path="/" element={<Login listener={changeLoggedState} />} />
-        <Route path='/directory' element={<Directory listener={changeLoggedState} />} />
-        <Route path='/phonebook' element={<PhoneBook />} />
-        <Route path='/agenda' element={<Agenda/>} />
+        <Route path="/" element={isLoggedIn ? <Navigate to="/directory"/> : <Login listener={changeLoggedState}/>} />
+        <Route path='/directory' element={<CheckLogStatus component={Directory}/>} />
+        <Route path='/phonebook' element={<CheckLogStatus component={PhoneBook}/>} />
+        <Route path='/agenda' element={<CheckLogStatus component={Agenda}/>} />
       </Routes>
-      {/*{isLoggedIn ? <Directory listener={changeLoggedState}/> : <Login listener={changeLoggedState}/>}*/}
       <Footer />
     </div>
   );

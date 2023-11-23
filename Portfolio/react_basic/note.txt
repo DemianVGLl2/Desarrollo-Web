@@ -1,3 +1,7 @@
 https://stackoverflow.com/questions/74726224/opensslerrorstack-error03000086digital-envelope-routinesinitialization-e
 npm install --save-dev concurrently
 npm run dev (checar el package.json para los detalles del dev)
+Modify pagckage.json of server, to run a npm start: nodemon server.js, then create a server and dev scrpits
+
+    "dev": "concurrently \"npm run server \" \"npm run start\"",
+

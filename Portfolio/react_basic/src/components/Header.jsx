@@ -3,7 +3,7 @@ import '../App.css';
 import Picture from "./Picture";
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header(props) {
     var name = "Demián";
     var lname = "Velasco";
     let greeting;
@@ -35,20 +35,32 @@ function Header() {
         customStyle.background = "darkblue";
         customStyle.color = "white";
     }
-    
+
+    function logOut() {
+        props.listener();
+    };
 
     return (
         <div>
+            <div className="container">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <ul className="navbar-nav">
+                                <li className="nav-item"><Link to="/directory" className="nav-link">Directory</Link></li>
+                                <li className="nav-item"><Link to="/phonebook" className="nav-link">Phone Book</Link></li>
+                                <li className="nav-item"><Link to="/agenda" className="nav-link">Agenda</Link></li>
+                                {!props.status ? <li className="nav-item"><Link to="/" className="nav-link">Login</Link></li> : <li className="nav-item"><Link to="/" className="btn btn-outline-success" onClick={logOut}>Logout</Link></li>}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
             <h1 style={customStyle}>{greeting} world! My name is {name + " " + lname}</h1>
             <Picture />
-            <nav>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/directory">Directory</Link></li>
-                    <li><Link to="/phonebook">Phone Book</Link></li>
-                    <li><Link to="/agenda">Agenda</Link></li>
-                </ul>
-            </nav>
         </div>
     );
 }

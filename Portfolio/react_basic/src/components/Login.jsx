@@ -39,6 +39,11 @@ function Login(props) {
     }
 
     function submitForm(event) {
+        var apiPath = "";
+        if (process.env.NODE_ENV === "production") {
+            apiPath = "/api";
+        }
+
         axios
             .post("/login", {
                 user: userProfile.user,
