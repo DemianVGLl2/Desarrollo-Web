@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    /* Custom CSS to position Child Card */
+    .child-card {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Parent Card</h5>
+
+        <!-- Nested Child Card -->
+        <div class="card child-card">
+          <div class="card-body">
+            <h5 class="card-title">Child Card</h5>
+            <p class="card-text">This is the content of the child card.</p>
+          </div>
+        </div>
+
+        <p class="card-text">This is the content of the parent card.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
