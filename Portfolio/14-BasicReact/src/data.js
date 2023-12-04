@@ -34,6 +34,10 @@ const sw = [
     },
     like: false,
     dislike: false,
+    comments: {
+      user: [],
+      comment: [],
+    }
   },
   {
     episode: "3",
@@ -48,6 +52,10 @@ const sw = [
     },
     like: false,
     dislike: false,
+    comments: {
+      user: [],
+      comment: [],
+    }
   },
   {
     episode: "4",
@@ -62,6 +70,10 @@ const sw = [
     },
     like: false,
     dislike: false,
+    comments: {
+      user: [],
+      comment: [],
+    }
   },
   {
     episode: "5",
@@ -76,6 +88,10 @@ const sw = [
     },
     like: false,
     dislike: false,
+    comments: {
+      user: [],
+      comment: [],
+    }
   },
   {
     episode: "6",
@@ -90,6 +106,10 @@ const sw = [
     },
     like: false,
     dislike: false,
+    comments: {
+      user: [],
+      comment: [],
+    }
   },
 ];
 
