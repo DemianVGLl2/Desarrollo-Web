@@ -4,6 +4,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+const PORT = process.env.PORT || 5000;
+
 if (process.env.NODE_ENV === 'production') {
 
     app.use(express.static('client/build'));
@@ -31,6 +33,6 @@ app.post("/login", (req, res) => {
     res.json(response);
 });
 
-app.listen(5000, () => {
-    console.log("Listening to port 5000");
+app.listen(PORT, () => {
+    console.log("Listening to port " + PORT);
 });

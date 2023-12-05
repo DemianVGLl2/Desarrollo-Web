@@ -45,7 +45,7 @@ function Login(props) {
         }
 
         axios
-            .post("/login", {
+            .post(apiPath+"/login", {
                 user: userProfile.user,
                 password: userProfile.password,
             })
